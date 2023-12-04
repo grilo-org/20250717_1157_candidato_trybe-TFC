@@ -17,8 +17,15 @@ export default class LoginService {
     }
 
     const findUser = await this.userModel.findUser(login);
+    const isValidEmail = await this.userModel.isValidEmail(login.email);
+    const emailRegex = /\S+@\S+\.\S+/;
+    const validPassword = login.password.length >= 6;
 
     if (!findUser || !bcrypt.compareSync(login.password, findUser.password)) {
+      return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
+    }
+
+    if (isValidEmail === false || !emailRegex.test(login.email) || !validPassword) {
       return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
     }
 

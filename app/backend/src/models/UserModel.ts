@@ -11,4 +11,12 @@ export default class UserModel {
     }
     return userData.dataValues;
   }
+
+  public async isValidEmail(email: string): Promise<boolean> {
+    const userData = await this.model.findOne({ where: { email } });
+    if (!userData) {
+      return false;
+    }
+    return true;
+  }
 }
