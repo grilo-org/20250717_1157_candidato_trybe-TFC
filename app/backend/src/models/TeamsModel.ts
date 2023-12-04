@@ -12,4 +12,11 @@ export default class TeamsModel {
       return { id, teamName };
     });
   }
+
+  async findById(id: number): Promise<InterfaceTeam | null> {
+    const teamData = await this.model.findByPk(id);
+    if (!teamData) return null;
+    const { teamName } = teamData;
+    return { id, teamName };
+  }
 }
