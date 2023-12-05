@@ -9,5 +9,3 @@ router.use('/teams', teamsRouter);
 router.use('/login', loginRouter);
 
 export default router;
-
-// teste
