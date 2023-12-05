@@ -1,6 +1,6 @@
 import { Model, QueryInterface, DataTypes } from 'sequelize';
 import InterfaceTeam from '../../Interfaces/Teams';
-import InterfaceUser from '../../Interfaces/Users';
+import {InterfaceUser} from '../../Interfaces/Users';
 
 export default {
   up(queryInterface: QueryInterface) {
