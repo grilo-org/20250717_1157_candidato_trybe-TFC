@@ -6,7 +6,7 @@ import {
   CreationOptional,
 } from 'sequelize';
 import db from '.';
-// import SequelizeTeam from './SequelizeTeam';
+import SequelizeTeam from './SequelizeTeam';
 
 class SequelizeMatches extends Model<InferAttributes<SequelizeMatches>,
 InferCreationAttributes<SequelizeMatches>> {
@@ -56,6 +56,11 @@ SequelizeMatches.init({
   timestamps: false,
   underscored: true,
 });
+
+SequelizeTeam.hasMany(SequelizeMatches, { foreignKey: 'homeTeamId' });
+SequelizeTeam.hasMany(SequelizeMatches, { foreignKey: 'awayTeamId' });
+SequelizeMatches.belongsTo(SequelizeTeam, { as: 'HomeTeam', foreignKey: 'homeTeamId' });
+SequelizeMatches.belongsTo(SequelizeTeam, { as: 'AwayTeam', foreignKey: 'awayTeamId' });
 
 /**
   * `Workaround` para aplicar as associations em TS:
