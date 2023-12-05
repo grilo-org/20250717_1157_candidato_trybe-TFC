@@ -19,4 +19,12 @@ export default class UserModel {
     }
     return true;
   }
+
+  public async getRole(email: string): Promise<string> {
+    const userData = await this.model.findOne({ where: { email } });
+    if (!userData) {
+      return 'Role not found';
+    }
+    return userData.dataValues.role;
+  }
 }

@@ -1,14 +1,22 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import * as jwt from 'jsonwebtoken';
 
-const validateLogin = async (req: Request, res: Response, next: NextFunction) => {
-  const { email, password } = req.body;
-  const emailRegex = /\S+@\S+\.\S+/;
-  const validPassword = password.length >= 6;
+const SECRET_KEY = process.env.JWT_SECRET || 'suaSenhaSecreta';
 
-  if (!emailRegex.test(email) || !validPassword) {
-    return res.status(400).json({ message: 'Invalid email or password' });
+const auth = (req: Request, res: Response, next: NextFunction) => {
+  const { authorization } = req.headers;
+  try {
+    if (!authorization) {
+      return res.status(401).json({ message: 'Token not found' });
+    }
+
+    const token = authorization.split(' ')[1];
+    const decoded = jwt.verify(token, SECRET_KEY);
+    req.body = decoded;
+    return next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Token must be a valid token' });
   }
-  next();
 };
 
-export default validateLogin;
+export default auth;
