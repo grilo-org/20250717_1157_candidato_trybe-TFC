@@ -30,8 +30,10 @@ export default class MatchesModel {
     });
   }
 
-  async findAll(): Promise<MatchWithTeams[]> {
+  async findAll(inProgress?:boolean): Promise<MatchWithTeams[]> {
+    const whereCondition = inProgress !== undefined ? { inProgress } : {};
     const matchesData = await this.model.findAll({
+      where: whereCondition,
       include: [
         {
           model: SequelizeTeam,
