@@ -59,8 +59,8 @@ SequelizeMatches.init({
 
 SequelizeTeam.hasMany(SequelizeMatches, { foreignKey: 'homeTeamId' });
 SequelizeTeam.hasMany(SequelizeMatches, { foreignKey: 'awayTeamId' });
-SequelizeMatches.belongsTo(SequelizeTeam, { as: 'HomeTeam', foreignKey: 'homeTeamId' });
-SequelizeMatches.belongsTo(SequelizeTeam, { as: 'AwayTeam', foreignKey: 'awayTeamId' });
+SequelizeMatches.belongsTo(SequelizeTeam, { as: 'homeTeam', foreignKey: 'homeTeamId' });
+SequelizeMatches.belongsTo(SequelizeTeam, { as: 'awayTeam', foreignKey: 'awayTeamId' });
 
 /**
   * `Workaround` para aplicar as associations em TS:

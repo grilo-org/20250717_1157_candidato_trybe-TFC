@@ -5,4 +5,6 @@ export interface InterfaceMatches {
   awayTeamId: number;
   awayTeamGoals: number;
   inProgress: boolean;
+  homeTeamName?: string;
+  awayTeamName?: string;
 }
