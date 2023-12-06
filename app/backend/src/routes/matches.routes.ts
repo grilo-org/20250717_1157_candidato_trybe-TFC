@@ -18,6 +18,10 @@ router.get('/', (req: Request, res: Response) => {
   matchesController.getAllMatches(req, res, inProgressBoolean);
 });
 
+router.patch('/:id', auth, (req: Request, res: Response) => {
+  matchesController.updateMatch(req, res);
+});
+
 router.patch('/:id/finish', auth, (req: Request, res: Response) => {
   matchesController.finishMatch(req, res);
 });

@@ -17,9 +17,9 @@ export default class MatchesService {
     return { status: 'SUCCESS', data: { message: 'Finished' } };
   }
 
-  // public async findById(id: number): Promise<ServiceResponse<InterfaceTeam | null>> {
-  //   const team = await this.matchesModel.findById(id);
-  //   if (!team) return { status: 'NOT_FOUND', data: { message: 'Team not found' } };
-  //   return { status: 'SUCCESS', data: team };
-  // }
+  public async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number)
+    : Promise<ServiceResponse<ServiceMessage>> {
+    await this.matchesModel.updateMatch(id, homeTeamGoals, awayTeamGoals);
+    return { status: 'SUCCESS', data: { message: 'Match updated!' } };
+  }
 }
