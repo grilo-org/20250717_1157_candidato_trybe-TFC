@@ -4,6 +4,7 @@ import SequelizeTeam from '../database/models/SequelizeTeam';
 
 export default class TeamsModel {
   private model = SequelizeTeam;
+  static model: SequelizeTeam;
 
   async findAll(): Promise<InterfaceTeam[]> {
     const teamsData = await this.model.findAll();

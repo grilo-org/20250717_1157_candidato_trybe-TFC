@@ -26,8 +26,8 @@ router.patch('/:id/finish', auth, (req: Request, res: Response) => {
   matchesController.finishMatch(req, res);
 });
 
-router.post('/', auth, (_req: Request, res: Response) => {
-  matchesController.createMatch(_req, res);
+router.post('/', auth, (req: Request, res: Response) => {
+  matchesController.createMatch(req, res);
 });
 
 export default router;

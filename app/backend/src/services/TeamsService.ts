@@ -17,4 +17,9 @@ export default class TeamsService {
     if (!team) return { status: 'NOT_FOUND', data: { message: 'Team not found' } };
     return { status: 'SUCCESS', data: team };
   }
+
+  async doesTeamExist(id: number): Promise<boolean> {
+    const team = await this.teamsModel.findById(id);
+    return team !== null;
+  }
 }

@@ -1,6 +1,8 @@
+/* eslint-disable max-lines-per-function */
 import MatchesModel from '../models/MatchesModel';
 import { ServiceMessage, ServiceResponse } from '../Interfaces/ServiceResponse';
 import { InterfaceMatches, InterfaceNewMatch } from '../Interfaces/Matches';
+import TeamsService from './TeamsService';
 
 export default class MatchesService {
   constructor(
@@ -34,12 +36,26 @@ export default class MatchesService {
     awayTeamGoals: number,
   )
     : Promise<ServiceResponse<InterfaceNewMatch>> {
+    if (homeTeamId === awayTeamId) {
+      return { status: 'UNPROCESSABLE_ENTITY',
+        data: { message: 'It is not possible to create a match with two equal teams' } };
+    }
+
+    const teamModel = new TeamsService();
+    const homeTeamExists = await teamModel.doesTeamExist(homeTeamId);
+    const awayTeamExists = await teamModel.doesTeamExist(awayTeamId);
+
+    if (!homeTeamExists || !awayTeamExists) {
+      return { status: 'NOT_FOUND', data: { message: 'There is no team with such id!' } };
+    }
+
     const newMatch = await this.matchesModel.createMatch(
       homeTeamId,
       awayTeamId,
       homeTeamGoals,
       awayTeamGoals,
     );
+
     return { status: 'CREATED', data: newMatch };
   }
 }
