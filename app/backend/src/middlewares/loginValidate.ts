@@ -12,7 +12,7 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
 
     const token = authorization.split(' ')[1];
     const decoded = jwt.verify(token, SECRET_KEY);
-    req.body = decoded;
+    req.body.decoded = decoded;
     return next();
   } catch (error) {
     return res.status(401).json({ message: 'Token must be a valid token' });

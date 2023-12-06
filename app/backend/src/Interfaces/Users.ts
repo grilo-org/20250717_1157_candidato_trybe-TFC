@@ -1,5 +1,3 @@
-import { ICRUDModel } from './CRUD';
-
 export interface InterfaceUser {
   id: number;
   username: string;
@@ -12,5 +10,3 @@ export interface InterfaceUserLogin {
   email: string;
   password: string;
 }
-
-export type InterfaceUserModel = ICRUDModel<InterfaceUser>;

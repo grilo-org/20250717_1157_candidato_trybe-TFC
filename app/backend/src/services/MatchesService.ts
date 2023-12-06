@@ -20,6 +20,10 @@ export default class MatchesService {
   public async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number)
     : Promise<ServiceResponse<ServiceMessage>> {
     await this.matchesModel.updateMatch(id, homeTeamGoals, awayTeamGoals);
+
+    if (!homeTeamGoals || !awayTeamGoals) {
+      return { status: 'INVALID_DATA', data: { message: 'Missing parameters' } };
+    }
     return { status: 'SUCCESS', data: { message: 'Match updated!' } };
   }
 }

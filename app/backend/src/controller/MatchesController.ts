@@ -21,7 +21,6 @@ export default class MatchesController {
   public async updateMatch(req: Request, res: Response) {
     const { id } = req.params;
     const { homeTeamGoals, awayTeamGoals } = req.body;
-    console.log(req.body);
     const serviceResponse = await this.matchesService.updateMatch(
       Number(id),
       homeTeamGoals,
