@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import MatchesModel from '../models/MatchesModel';
 import { ServiceMessage, ServiceResponse } from '../Interfaces/ServiceResponse';
 import { InterfaceMatches, InterfaceNewMatch } from '../Interfaces/Matches';
@@ -29,6 +28,30 @@ export default class MatchesService {
     return { status: 'SUCCESS', data: { message: 'Match updated!' } };
   }
 
+  // Funções divididas devido ao limite de 20 linhas por função
+  private static async verifyTeamsExistence(homeTeamId: number, awayTeamId: number) {
+    const teamService = new TeamsService();
+    const homeTeam = await teamService.doesTeamExist(homeTeamId);
+    const awayTeam = await teamService.doesTeamExist(awayTeamId);
+    if (!homeTeam || !awayTeam) return false;
+    return true;
+  }
+
+  private async newMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<InterfaceNewMatch> {
+    const newMatch = await this.matchesModel.createMatch(
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+    );
+    return newMatch;
+  }
+
   public async createMatch(
     homeTeamId: number,
     awayTeamId: number,
@@ -41,21 +64,12 @@ export default class MatchesService {
         data: { message: 'It is not possible to create a match with two equal teams' } };
     }
 
-    const teamModel = new TeamsService();
-    const homeTeamExists = await teamModel.doesTeamExist(homeTeamId);
-    const awayTeamExists = await teamModel.doesTeamExist(awayTeamId);
-
-    if (!homeTeamExists || !awayTeamExists) {
+    const teamExist = await MatchesService.verifyTeamsExistence(homeTeamId, awayTeamId);
+    if (!teamExist) {
       return { status: 'NOT_FOUND', data: { message: 'There is no team with such id!' } };
     }
 
-    const newMatch = await this.matchesModel.createMatch(
-      homeTeamId,
-      awayTeamId,
-      homeTeamGoals,
-      awayTeamGoals,
-    );
-
+    const newMatch = await this.newMatch(homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals);
     return { status: 'CREATED', data: newMatch };
   }
 }
