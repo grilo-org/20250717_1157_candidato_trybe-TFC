@@ -1,6 +1,6 @@
 import MatchesModel from '../models/MatchesModel';
 import { ServiceMessage, ServiceResponse } from '../Interfaces/ServiceResponse';
-import { InterfaceMatches } from '../Interfaces/Matches';
+import { InterfaceMatches, InterfaceNewMatch } from '../Interfaces/Matches';
 
 export default class MatchesService {
   constructor(
@@ -25,5 +25,21 @@ export default class MatchesService {
       return { status: 'INVALID_DATA', data: { message: 'Missing parameters' } };
     }
     return { status: 'SUCCESS', data: { message: 'Match updated!' } };
+  }
+
+  public async createMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  )
+    : Promise<ServiceResponse<InterfaceNewMatch>> {
+    const newMatch = await this.matchesModel.createMatch(
+      homeTeamId,
+      awayTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+    );
+    return { status: 'CREATED', data: newMatch };
   }
 }

@@ -8,3 +8,12 @@ export interface InterfaceMatches {
   homeTeamName?: string;
   awayTeamName?: string;
 }
+
+export interface InterfaceNewMatch {
+  id: number;
+  homeTeamId: number;
+  homeTeamGoals: number;
+  awayTeamId: number;
+  awayTeamGoals: number;
+  inProgress: boolean;
+}

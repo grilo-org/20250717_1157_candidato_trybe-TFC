@@ -1,6 +1,6 @@
 import SequelizeTeam from '../database/models/SequelizeTeam';
 import SequelizeMatches from '../database/models/SequelizeMatches';
-import { InterfaceMatches } from '../Interfaces/Matches';
+import { InterfaceMatches, InterfaceNewMatch } from '../Interfaces/Matches';
 
 interface MatchWithTeams extends InterfaceMatches {
   homeTeam: { teamName: string }
@@ -56,5 +56,23 @@ export default class MatchesModel {
 
   async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number): Promise<void> {
     await this.model.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+  }
+
+  async createMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<InterfaceNewMatch> {
+    const match = {
+      homeTeamId,
+      homeTeamGoals,
+      awayTeamId,
+      awayTeamGoals,
+      inProgress: true,
+    };
+
+    const newMatch = await this.model.create(match);
+    return newMatch;
   }
 }
