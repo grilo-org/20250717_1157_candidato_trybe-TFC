@@ -49,4 +49,8 @@ export default class MatchesModel {
     });
     return MatchesModel.mapMatchesData(matchesData);
   }
+
+  async finishMatch(id: number): Promise<void> {
+    await this.model.update({ inProgress: false }, { where: { id } });
+  }
 }
