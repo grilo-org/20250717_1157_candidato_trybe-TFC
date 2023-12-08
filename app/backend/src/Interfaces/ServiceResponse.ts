@@ -10,7 +10,7 @@ export type ServiceResponseError = {
 
 export type ServiceResponseSuccess<T> = {
   status: 'SUCCESS' | 'CREATED',
-  data: T
+  data: T | T[] | ServiceMessage
 };
 
 export type ServiceResponse<T> = ServiceResponseError | ServiceResponseSuccess<T>;
