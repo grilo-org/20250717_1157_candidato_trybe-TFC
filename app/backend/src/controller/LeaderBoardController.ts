@@ -7,8 +7,8 @@ export default class LeaderBoardController {
     private leaderBoardService = new LeaderBoardService(),
   ) { }
 
-  public async getHomeTeams(req: Request, res: Response) {
-    const serviceResponse = await this.leaderBoardService.getHomeTeams();
+  public async getHomeTeams(_req: Request, res: Response) {
+    const serviceResponse = await this.leaderBoardService.getHomeTeams(true);
     return res.status(mapStatus(serviceResponse.status)).json(serviceResponse.data);
   }
 }

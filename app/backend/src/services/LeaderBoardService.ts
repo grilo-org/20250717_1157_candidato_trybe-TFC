@@ -7,8 +7,8 @@ export default class LeaderBoardService {
     private leaderBoardModel: LeaderBoardModel = new LeaderBoardModel(),
   ) { }
 
-  public async getHomeTeams(): Promise<ServiceResponse<InterfaceLeaderBoard>> {
-    const teams = await this.leaderBoardModel.getHomeTeams();
+  public async getHomeTeams(home: boolean): Promise<ServiceResponse<InterfaceLeaderBoard>> {
+    const teams = await this.leaderBoardModel.getHomeTeams(home);
     return { status: 'SUCCESS', data: teams };
   }
 }
