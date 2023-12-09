@@ -8,7 +8,7 @@ export default class LeaderBoardService {
   ) { }
 
   public async getHomeTeams(home: boolean): Promise<ServiceResponse<InterfaceLeaderBoard>> {
-    const teams = await this.leaderBoardModel.getHomeTeams(home);
+    const teams = await this.leaderBoardModel.getLeaderBoards(home);
     return { status: 'SUCCESS', data: teams };
   }
 }

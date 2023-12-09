@@ -33,7 +33,7 @@ export default class LeaderBoard {
     };
   }
 
-  async getHomeTeams(home: boolean): Promise<InterfaceLeaderBoard[]> {
+  async getLeaderBoards(home: boolean): Promise<InterfaceLeaderBoard[]> {
     const teams = await this.teams.findAll();
     const matches = await this.matches.findAll();
     return teams.map((team) => {
