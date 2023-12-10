@@ -13,6 +13,12 @@ export default class LeaderBoard {
     this.teams = new TeamsModel();
   }
 
+  private static sortTeams = (a: InterfaceLeaderBoard, b: InterfaceLeaderBoard) =>
+    b.totalPoints - a.totalPoints
+      || b.totalVictories - a.totalVictories
+      || b.goalsBalance - a.goalsBalance
+      || b.goalsFavor - a.goalsFavor;
+
   private static createTeamStats(
     team: InterfaceTeam,
     performances: TeamPerformance,
@@ -43,10 +49,50 @@ export default class LeaderBoard {
           && match.inProgress === false);
       const performances = new TeamPerformance(finishedMatches);
       return LeaderBoard.createTeamStats(team, performances, home);
-    }).sort((a, b) =>
-      b.totalPoints - a.totalPoints
-    || b.totalVictories - a.totalVictories
-    || b.goalsBalance - a.goalsBalance
-    || b.goalsFavor - a.goalsFavor);
+    }).sort(LeaderBoard.sortTeams);
+  }
+
+  private static createAllTeamsStats(
+    homePerformance: TeamPerformance,
+    awayPerformance: TeamPerformance,
+  ): InterfaceLeaderBoard {
+    const totalPoints = homePerformance.calculatePoints(true)
+    + awayPerformance.calculatePoints(false);
+    const totalGames = homePerformance.getTotalGames(true) + awayPerformance.getTotalGames(false);
+
+    const totalPerformance = {
+      totalPoints,
+      totalGames,
+      totalVictories: homePerformance.getVictories(true) + awayPerformance.getVictories(false),
+      totalDraws: homePerformance.getDraws() + awayPerformance.getDraws(),
+      totalLosses: homePerformance.getLosses(true) + awayPerformance.getLosses(false),
+      goalsFavor: homePerformance.getGoals(true) + awayPerformance.getGoals(false),
+      goalsOwn: homePerformance.getGoalsAgainst(true) + awayPerformance.getGoalsAgainst(false),
+      goalsBalance: homePerformance.getGoalsBalance(true) + awayPerformance.getGoalsBalance(false),
+      efficiency: parseFloat(((totalPoints / (totalGames * 3)) * 100).toFixed(2)),
+    };
+
+    return totalPerformance;
+  }
+
+  async getGeneralLeaderBoard(): Promise<InterfaceLeaderBoard[]> {
+    const teams = await this.teams.findAll();
+    const matches = await this.matches.findAll();
+
+    return teams.map((team) => {
+      const homeMatches = matches.filter((match) => match.homeTeamId === team.id
+      && !match.inProgress);
+      const awayMatches = matches.filter((match) => match.awayTeamId === team.id
+      && !match.inProgress);
+
+      const homePerformance = new TeamPerformance(homeMatches);
+      const awayPerformance = new TeamPerformance(awayMatches);
+
+      const totalPerformance = LeaderBoard.createAllTeamsStats(homePerformance, awayPerformance);
+      return {
+        name: team.teamName,
+        ...totalPerformance,
+      };
+    }).sort(LeaderBoard.sortTeams);
   }
 }

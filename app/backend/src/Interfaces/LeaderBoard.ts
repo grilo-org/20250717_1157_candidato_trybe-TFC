@@ -1,5 +1,5 @@
 export default interface InterfaceLeaderBoard {
-  name: string,
+  name?: string,
   totalPoints: number,
   totalGames: number,
   totalVictories: number,

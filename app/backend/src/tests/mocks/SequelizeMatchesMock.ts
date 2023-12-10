@@ -671,20 +671,6 @@ export const mockedMatchesResult = [
       "teamName": "Bahia"
     }
   },
-  {
-    "id": 49,
-    "homeTeamId": 4,
-    "homeTeamGoals": 2,
-    "awayTeamId": 9,
-    "awayTeamGoals": 1,
-    "inProgress": false,
-    "homeTeam": {
-      "teamName": "Corinthians"
-    },
-    "awayTeam": {
-      "teamName": "Internacional"
-    }
-  }
 ]
 
 export const mockedResultInProgress = [

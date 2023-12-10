@@ -52,4 +52,8 @@ export default class TeamPerformances {
     const draws = this.getDraws();
     return (victories * 3) + draws;
   }
+
+  getTotalGames(home: boolean): number {
+    return this.getVictories(home) + this.getDraws() + this.getLosses(home);
+  }
 }

@@ -11,4 +11,9 @@ export default class LeaderBoardService {
     const teams = await this.leaderBoardModel.getLeaderBoards(home);
     return { status: 'SUCCESS', data: teams };
   }
+
+  public async getAllLeaderBoards(): Promise<ServiceResponse<InterfaceLeaderBoard>> {
+    const allTeams = await this.leaderBoardModel.getGeneralLeaderBoard();
+    return { status: 'SUCCESS', data: allTeams };
+  }
 }
