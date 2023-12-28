@@ -15,3 +15,5 @@ No TFC, apliquei todas as habilidades adquiridas no módulo de back-end:
 🔹 Implementação de um CRUD completo em TypeScript, utilizando ORM para gerenciamento e manipulação do banco de dados.
 <br />
 🔹 Implementação de testes unitários.
+<br />
+Neste projeto, desenvolvi apenas o backend da aplicação em cima de um frontend que já havia sido feito pela Trybe.
