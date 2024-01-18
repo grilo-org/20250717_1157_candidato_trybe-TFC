@@ -8,7 +8,7 @@
 
 ## Descrição
 
-Projeto FullStack Dockerizado realizado durante o curso da Trybe. Backend desenvolvido por mim, com o Frontend já desenvolvido. fora adicionado, ao frontend, páginas responsivas para aparelhos com tela de até 500px, por ora (ainda em desenvolvimento).
+Projeto FullStack Dockerizado realizado durante o curso da Trybe. Backend desenvolvido por mim, com o Frontend já desenvolvido.
 
 ## Objetivo
 
